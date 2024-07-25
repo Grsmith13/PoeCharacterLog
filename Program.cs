@@ -7,13 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
+using System.Reflection.PortableExecutable;
 
 /*
     Gage Smith
     7/25/2024
 
     Application connects to a MsSQL in a docker container and allows the user to enter character details to build a database of their characters from Path of Exile.
-    Currently things are a bit rough and need a lot of fixing up and optimization , but  will be periodically coming back and tidying things up. 
+    Currently things are a bit rough and need a lot of fixing up and optimization , but  will be periodically coming back and tidying things up.
 */
 
 namespace MySqlAPP
@@ -31,15 +32,11 @@ namespace MySqlAPP
     {
         string databaseName = "PoeHistory";
         string tableName = "PoeCharacters";
+
+        private string ConnectionString = "Server=localhost,1433;Database=master;User Id=sa;Password=GibJobPlease2024;TrustServerCertificate=True";
         public void MainMenu()
         {
 
-            // using (SqlConnection connection = new SqlConnection())
-            // {
-            //     connection.ConnectionString = "Server=localhost,1433;Database=master;User Id=sa;Password=GibJobPlease2024;TrustServerCertificate=True";
-            //     //Sets up connection to MsSQL
-            //     connection.Open();
-            // }
 
             bool inMenu = true;
 
@@ -88,10 +85,8 @@ namespace MySqlAPP
         //Checks if the database exists and creates if it doesn't
         private void CreateDatabase()
         {
-            using (SqlConnection connection = new SqlConnection())
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
-                connection.ConnectionString = "Server=localhost,1433;Database=master;User Id=sa;Password=GibJobPlease2024;TrustServerCertificate=True";
-                //Sets up connection to MsSQL
                 connection.Open();
 
                 using (SqlCommand createDbCommand = new SqlCommand($"IF DB_ID('{databaseName}') IS NULL CREATE DATABASE {databaseName}", connection))
@@ -102,13 +97,11 @@ namespace MySqlAPP
             }
         }
 
-
+        //Checks if the table exists and creates if it doesn't
         private void CreateTable()
         {
-            using (SqlConnection connection = new SqlConnection())
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
-                connection.ConnectionString = "Server=localhost,1433;Database=master;User Id=sa;Password=GibJobPlease2024;TrustServerCertificate=True";
-                //Sets up connection to MsSQL
                 connection.Open();
 
                 connection.ChangeDatabase("POEHistory");
@@ -128,12 +121,11 @@ namespace MySqlAPP
                 }
             }
         }
+        //Displays the table
         private void DisplayTable()
         {
-            using (SqlConnection connection = new SqlConnection())
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
-                connection.ConnectionString = "Server=localhost,1433;Database=master;User Id=sa;Password=GibJobPlease2024;TrustServerCertificate=True";
-                //Sets up connection to MsSQL
                 connection.Open();
 
                 connection.ChangeDatabase("POEHistory");
@@ -152,13 +144,11 @@ namespace MySqlAPP
             }
         }
 
-
+        //Drops the table as a way to reset it. 
         private void DropTable()
         {
-            using (SqlConnection connection = new SqlConnection())
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
-                connection.ConnectionString = "Server=localhost,1433;Database=master;User Id=sa;Password=GibJobPlease2024;TrustServerCertificate=True";
-                //Sets up connection to MsSQL
                 connection.Open();
 
                 connection.ChangeDatabase("POEHistory");
@@ -171,12 +161,17 @@ namespace MySqlAPP
                 }
             }
         }
+        /*
+            Asks the user the following information about their character to enter into the database
+                Name
+                Level
+                League
+                Ascendancy
+        */
         private void AddCharacter()
         {
-            using (SqlConnection connection = new SqlConnection())
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
-                connection.ConnectionString = "Server=localhost,1433;Database=master;User Id=sa;Password=GibJobPlease2024;TrustServerCertificate=True";
-                //Sets up connection to MsSQL
                 connection.Open();
                 connection.ChangeDatabase("POEHistory");
 
@@ -225,13 +220,11 @@ namespace MySqlAPP
                 }
             }
         }
-
+        //Searches by name to delete character from table.
         private void DeleteCharacter()
         {
-            using (SqlConnection connection = new SqlConnection())
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
-                connection.ConnectionString = "Server=localhost,1433;Database=master;User Id=sa;Password=GibJobPlease2024;TrustServerCertificate=True";
-                //Sets up connection to MsSQL
                 connection.Open();
                 connection.ChangeDatabase("POEHistory");
 

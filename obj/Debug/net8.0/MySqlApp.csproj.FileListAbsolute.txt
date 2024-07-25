@@ -53,3 +53,4 @@ C:\Users\crese\MySqlApp\obj\Debug\net8.0\refint\MySqlApp.dll
 C:\Users\crese\MySqlApp\obj\Debug\net8.0\MySqlApp.pdb
 C:\Users\crese\MySqlApp\obj\Debug\net8.0\MySqlApp.genruntimeconfig.cache
 C:\Users\crese\MySqlApp\obj\Debug\net8.0\ref\MySqlApp.dll
+C:\Users\crese\MySqlApp\obj\Debug\net8.0\MySqlApp.sourcelink.json
